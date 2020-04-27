@@ -1,0 +1,40 @@
+The website will support the following features:
+
+1. User can visit the main website, which contains instructions on what the website does
+
+2. User can create a personal task, public or private
+   - Server creates a unique URL, and stores a corresponding calendar object, which is a data container
+      for all the checkin activities and comments
+
+3. User can create a group task, or join a group task.
+   - Server creates a unique URL for the group task, and webpage stores all the members that are       participating.
+   - With every entry into the group task, a new calendar object is created
+
+4. User to delete his task at any time. Group task expires when the last member activity happened 180 days ago.
+
+4. User can browse popular ongoing tasks, or search for tasks in the search bar
+
+5. Access control
+   - User can make his task public or private. Private task requires a key to access the content of the           calendar object. Only task owner can do the check in, owner has an owner key. Everyone with access      can leave a coment.
+   - Group projects can be public or private, anyone can join a public group task, but private groups             require a key to join.
+   - This is no privacy within groups, all members can see all activities.
+   - User can change his owner key or private task key for whatever reason.
+
+6. User profile
+   - Only tasks are stored, the website does not store user profile.
+   - User can divulge as much or as little personal information in his task description, and the website      (aka me), will not care about who is using the service or why.
+
+
+The website MAY support the following features if I have to time to build them:
+
+1. Comments may contain emoji or multimedia, in case user wants to showcase his/her achievements.
+
+2. Developer API may be provided at some point, not that I anticipate people using it, but it's nice to know how to provide them so may end up providing it.
+
+3. Report for abuse. If user puts copyrighted material on his/her calendar, or posts pornagraphic, violent, illegal, or otherwise inappropriate contents on my website, I could get into trouble. Nah, I don't want to get into trouble.
+
+The website will NOT support the following features:
+
+1. Instant messaging, friending and blacklisting. Anyone interested in these features can go use     Facebook.
+
+2. Task recommendation. Again, I do not want to collect user specific information and have always hated "customized" services that all the big websites have forced onto me. So no, none of that.
