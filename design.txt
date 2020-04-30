@@ -1,0 +1,18 @@
+Preliminary choices for tech stack
+
+Server side:
+
+Architecture- serverless, function-as-a-service backend
+Language- Python
+Database- NoSQL key value store
+Caching(if needed)- some form of in-memory cache
+OS- N/A, no virtual server instances needed
+
+Client side:
+
+ES6/React framework
+CSS and HTML
+
+Supported Platform:
+Chrome
+mobile apps may be provided later (if people actually use the service)
