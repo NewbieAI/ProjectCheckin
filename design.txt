@@ -5,7 +5,7 @@ Server side:
 Architecture- serverless, function-as-a-service backend
 Language- Python
 Database- NoSQL key value store
-Caching(if needed)- some form of in-memory cache
+Caching(if needed)- some form of in-memory cache for frequently accessed data
 OS- N/A, no virtual server instances needed
 
 Client side:
