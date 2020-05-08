@@ -1,0 +1,135 @@
+The first step here is to design a database schema because the rest of the
+backend depends on reliable and consistent access to my database.
+
+What entities do I need to account for in application? Do I need multiple
+NoSQL databases or can I just cram all the entities into a single database
+like? Let's say I CAN use a single DynamoDB table to address all my needs,
+what do I need to store?
+
+I need to store users. Each user has a list of favorite tasks, a list of
+followed users, and an account balance(for betting purposes). I am also
+considering store a list of notifications.
+
+I need to store tasks. Each task stores a "calendar object", which really is
+just a list of checkin records, and the associated comments posted by the
+owner. Each task also has a separate comment list that is not bound to any 
+specific date. Each task also needs to store all the bets that are placed 
+on the task. 
+
+I need to store groups. Each group stores its description, and a list of
+ongoing tasks that are part of the group.
+
+
+A few concerns:
+
+1. How long can a task go on? It is theoretically possible for someone to
+maintain a checkin routine for decades. Let's just say the upper bound is
+approximately 100 years, that would mean the calender object has a length of
+36500, which is probably too large to be processed over a single call.
+
+2. How long can a comment list go on. If a task suddenly becomes very
+popular and attracts thousands of comments, would could contain multi-media
+in addtion to plain text, I would have some problems wouldn't I? It probably
+isn't advisable to store them is a very large list. I should probably
+consider storing individual comments with sort keys. Hmmm, something to
+consider. 
+
+
+Ok, let me start with the access patterns:
+
+1. Sign up
+
+creates a new user key value store in the database (write)
+
+2. Sign in
+
+reads the user value with given ID and password (read)
+
+3. Create task
+
+creates a new task key value store in the database (write)
+
+4. Create group
+
+creates a new group key value store in the database (write)
+
+5. Create task
+
+creates a new task key value store in the database (write)
+
+6. Check in
+
+modify an exisitng task key value store (write)
+
+7. Post comment
+
+modify an existing task key value store, and then creates a new comment key
+value store. (write)
+
+8. Follow Task
+
+modify an existing user key value store (write)
+
+9. Place bet
+
+modify an existing user key value store. modify an existing task key value
+store. (write)
+
+10. Deposit / withdraw
+
+modify an existing user key value store (write)
+
+11. Visit User Page
+
+Obtain an existing user key value store (read)
+
+12. Visit task page
+
+Obtain an existing task key value store. (read)
+
+13. Visit group page
+
+Obtain an existing group key value store. (read)
+
+
+Database schema:
+
+Single table:
+
+Primary key
+
+partition key:
+[objectType]#[objectID]
+
+sort key:
+look up how to do this
+
+User:
+user#[userID], sort_key
+Password: texthash
+Description: text
+Task: List[task_hash]
+Favorite: List[task_hash]
+Balance: number
+
+Group:
+group#[groupID], sort_key
+Description: text
+Members: List[task_hash]
+MemberCount: number
+
+Task:
+task#[taskID], sort_key
+Description: text
+OwnerKey: string
+PrivateKey: string
+Calendar:List[(boolean, comment_hash)]
+Observers: number
+Comments:List[comment_hash]
+Bets:[Structure TBD]
+
+Comment:
+comment#[taskID], sort_key
+Content: text
+Multimedia: string
+Reactions: List[int]
